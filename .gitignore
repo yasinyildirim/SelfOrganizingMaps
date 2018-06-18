@@ -1,6 +1,9 @@
 # Prerequisites
 *.d
 
+#Doxygen
+Doxyfile
+
 # Compiled Object files
 *.slo
 *.lo
