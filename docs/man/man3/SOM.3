@@ -1,0 +1,554 @@
+.TH "SOM< T >" 3 "Mon Jun 18 2018" "Version 0.1.0" "SOM" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+SOM< T > \- Self-Organizing Maps implementation\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <SOM\&.h>\fP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBSOM\fP (int w, int h, int d)"
+.br
+.RI "Overloaded Constructor\&. Weights are randomly assigned between [0,1)\&. "
+.ti -1c
+.RI "\fBSOM\fP (int w, int h, int d, \fBBMDistType\fP \fBbmdistType\fP, \fBDistanceType\fP \fBdistanceType\fP)"
+.br
+.RI "Overloaded Constructor\&. Weights are randomly assigned between [0,1)\&. "
+.ti -1c
+.RI "void \fBtrain\fP (const std::vector< std::vector< T >> &samples, unsigned int iterations, double s_learn_rate, double f_learn_rate, double neighborhoodSize)"
+.br
+.RI "trains the \fBSOM\fP\&. If there are less samples than th #N of iterations, then the samples are repeated cyclically\&. "
+.ti -1c
+.RI "std::vector< T > \fBcluster\fP (const std::vector< T > &sample)"
+.br
+.RI "clusters the input sample\&. "
+.ti -1c
+.RI "virtual \fB~SOM\fP ()"
+.br
+.RI "Empty destructor\&. "
+.ti -1c
+.RI "T *const \fBnodeAt\fP (int i, int j) const"
+.br
+.RI "get node (neuron) weights at given position\&. "
+.ti -1c
+.RI "void \fBsetNodeAt\fP (int i, int j, const std::vector< T > &val)"
+.br
+.RI "assign values to weights of the neuron at given indices\&. "
+.ti -1c
+.RI "void \fBload\fP (const std::string &model_path, const \fBSOMFileFormat\fP &ff)"
+.br
+.RI "loads the trained \fBSOM\fP network from the file\&. "
+.ti -1c
+.RI "void \fBsave\fP (const std::string &model_path, const \fBSOMFileFormat\fP &ff)"
+.br
+.RI "saves the trained \fBSOM\fP to the file\&. "
+.ti -1c
+.RI "int \fBcols\fP ()"
+.br
+.RI "get #N of columns (width) of \fBSOM\fP lattice "
+.ti -1c
+.RI "int \fBrows\fP ()"
+.br
+.RI "get #N of rows (height) of \fBSOM\fP lattice "
+.ti -1c
+.RI "int \fBdims\fP ()"
+.br
+.RI "get dimensions (codebook vector size) of \fBSOM\fP "
+.ti -1c
+.RI "T \fBcalcBestMatchingUnit\fP (const std::vector< T > &sample, int &y, int &x) const"
+.br
+.RI "calculates Best Matching Unit (winning neuron)\&. "
+.in -1c
+.SS "Private Member Functions"
+
+.in +1c
+.ti -1c
+.RI "T \fBeuclideanDistance\fP (const std::vector< T > &v1, const std::vector< T > &v2) const"
+.br
+.RI "calculates Euclidean Distance between 2 vectors\&. "
+.ti -1c
+.RI "T \fBsquaredEuclideanDistance\fP (const std::vector< T > &v1, const std::vector< T > &v2) const"
+.br
+.RI "calculates squared euclidean distance between 2 vectors\&. "
+.ti -1c
+.RI "T \fBcalcGaussian\fP (T mean, T stdDev, T x) const"
+.br
+.RI "calculates Gaussian function of given x\&. "
+.ti -1c
+.RI "T \fBcalcGaussian2D\fP (T meanX, T meanY, T sigmaX, T sigmaY, T x, T y) const"
+.br
+.RI "calculates 2D Gaussian function of given input pair (x,y)\&. "
+.ti -1c
+.RI "T \fBcalcGaussian2D\fP (int meanX, int meanY, T sigma, int x, int y) const"
+.br
+.RI "calculates 2D Gaussian function of given input pair (x,y)\&. This method uses the same sigma for X and Y dimensions\&. "
+.ti -1c
+.RI "T \fBeuclideanDistance\fP (const std::vector< T > &v1, const T *v2) const"
+.br
+.RI "calculates Euclidean Distance between 2 vectors\&. This method overloads () as second parameter is pointer to T for performance reasons\&. "
+.ti -1c
+.RI "T \fBdotProduct\fP (const std::vector< T > &v1, const T *v2) const"
+.br
+.RI "calculates Dot Product of 2 vectors\&. "
+.ti -1c
+.RI "T \fBcosineSimilarity\fP (const std::vector< T > &v1, const T *v2) const"
+.br
+.RI "calculates cosine similarity of 2 vectors\&. "
+.ti -1c
+.RI "T \fBL2norm\fP (const std::vector< T > &v1)"
+.br
+.RI "calculates L2 norm of a vector "
+.in -1c
+.SS "Private Attributes"
+
+.in +1c
+.ti -1c
+.RI "\fBBMDistType\fP \fBbmdistType\fP"
+.br
+.RI "Best Matching Unit neighbour distance update type of the \fBSOM\fP\&. "
+.ti -1c
+.RI "\fBDistanceType\fP \fBdistanceType\fP"
+.br
+.RI "distance metric that is used when BMU is calculated see () "
+.ti -1c
+.RI "int \fBW\fP"
+.br
+.RI "grid width "
+.ti -1c
+.RI "int \fBH\fP"
+.br
+.RI "grid height "
+.ti -1c
+.RI "int \fBD\fP"
+.br
+.RI "size of the weight vector of the each node\&. "
+.ti -1c
+.RI "std::vector< T > \fBweights\fP"
+.br
+.RI "weights / nodes of \fBSOM\fP "
+.in -1c
+.SS "Friends"
+
+.in +1c
+.ti -1c
+.RI "YAML::Emitter & \fBoperator<<\fP (YAML::Emitter &out, const \fBSOM\fP< T > &som)"
+.br
+.ti -1c
+.RI "void \fBoperator>>\fP (const YAML::Node &node, \fBSOM\fP< T > &som)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+
+.SS "template<class T>
+.br
+class SOM< T >"
+Self-Organizing Maps implementation\&. 
+
+
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "template<class T> \fBSOM\fP< T >::\fBSOM\fP (int w, int h, int d)\fC [inline]\fP"
+
+.PP
+Overloaded Constructor\&. Weights are randomly assigned between [0,1)\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIw\fP width
+.br
+\fIh\fP height
+.br
+\fId\fP #N of dimensions (codebook size)\&.
+.RE
+.PP
+
+.SS "template<class T> \fBSOM\fP< T >::\fBSOM\fP (int w, int h, int d, \fBBMDistType\fP bmdistType, \fBDistanceType\fP distanceType)\fC [inline]\fP"
+
+.PP
+Overloaded Constructor\&. Weights are randomly assigned between [0,1)\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIw\fP Width\&.
+.br
+\fIh\fP Height\&.
+.br
+\fId\fP #N of Dimensions\&.
+.br
+\fIbmdistType\fP BMU update coefficients type\&. 
+.br
+\fIdistanceType\fP Distance metric type to use\&. 
+.RE
+.PP
+
+.SS "template<class T> virtual \fBSOM\fP< T >::~\fBSOM\fP ()\fC [inline]\fP, \fC [virtual]\fP"
+
+.PP
+Empty destructor\&. 
+.SH "Member Function Documentation"
+.PP 
+.SS "template<class T> T \fBSOM\fP< T >::calcBestMatchingUnit (const std::vector< T > & sample, int & y, int & x) const\fC [inline]\fP"
+
+.PP
+calculates Best Matching Unit (winning neuron)\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIsample\fP input sample
+.br
+\fIy\fP index of the 0th dimension (rows) of the winning neuron 
+.br
+\fIx\fP index of the 1th dimension (columns) of the winning neuron 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+distance between BMU and sample 
+.RE
+.PP
+
+.SS "template<class T> T \fBSOM\fP< T >::calcGaussian (T mean, T stdDev, T x) const\fC [inline]\fP, \fC [private]\fP"
+
+.PP
+calculates Gaussian function of given x\&. $ f(x)=\frac{1}{(\sigma \sqrt{(2\pi)}}e^{(\frac{-(x-\mu)^2}{2\sigma^2})} $ 
+.PP
+\fBParameters:\fP
+.RS 4
+\fImean\fP mean of the Gaussian distribution
+.br
+\fIstdDev\fP standarad deviation
+.br
+\fIx\fP input value
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Gaussian function of the given x\&.
+.RE
+.PP
+
+.SS "template<class T> T \fBSOM\fP< T >::calcGaussian2D (T meanX, T meanY, T sigmaX, T sigmaY, T x, T y) const\fC [inline]\fP, \fC [private]\fP"
+
+.PP
+calculates 2D Gaussian function of given input pair (x,y)\&. $ f(x,y)=\frac{1}{(2\pi\sigma_x\sigma_y)}e^{(-[(x-\mu_x)^2/(2\sigma_x^2)+(y-\mu_y)^2 /(2\sigma_y^2)])} $ \&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fImeanX\fP mean value in X dimension\&. 
+.br
+\fImeanY\fP mean value in Y dimension\&. 
+.br
+\fIsigmaX\fP standarad deviation in X dimension\&. 
+.br
+\fIsigmaY\fP standarad deviation in Y dimension\&. 
+.br
+\fIx\fP input value (X dimension)\&. 
+.br
+\fIy\fP input value (Y dimension)\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+2d gaussian function value of the given (x,y) pair\&.
+.RE
+.PP
+
+.SS "template<class T> T \fBSOM\fP< T >::calcGaussian2D (int meanX, int meanY, T sigma, int x, int y) const\fC [inline]\fP, \fC [private]\fP"
+
+.PP
+calculates 2D Gaussian function of given input pair (x,y)\&. This method uses the same sigma for X and Y dimensions\&. $ f(x,y)=\frac{1}{(2\pi\sigma^2)}e^{(-[(x-\mu_x)^2+(y-\mu_y)^2]/(2\sigma^2))} $\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fImeanX\fP mean value in X dimension\&.
+.br
+\fImeanY\fP mean value in Y dimension\&.
+.br
+\fIsigma\fP standarad deviation (sigmaVector=[sigma, sigma])
+.br
+\fIx\fP input value (X dimension)\&.
+.br
+\fIy\fP input value (Y dimension)\&.
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+2d gaussian function value of the given (x,y) pair\&.
+.RE
+.PP
+
+.SS "template<class T> std::vector<T> \fBSOM\fP< T >::cluster (const std::vector< T > & sample)\fC [inline]\fP"
+
+.PP
+clusters the input sample\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIsample\fP input sample
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Winner neuron's weight vector, which corresponds to the most similar weights to input pattern\&. 
+.RE
+.PP
+
+.SS "template<class T> int \fBSOM\fP< T >::cols ()\fC [inline]\fP"
+
+.PP
+get #N of columns (width) of \fBSOM\fP lattice 
+.PP
+\fBReturns:\fP
+.RS 4
+
+.RE
+.PP
+
+.SS "template<class T> T \fBSOM\fP< T >::cosineSimilarity (const std::vector< T > & v1, const T * v2) const\fC [inline]\fP, \fC [private]\fP"
+
+.PP
+calculates cosine similarity of 2 vectors\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIv1\fP vector 1
+.br
+\fIv2\fP vector 2
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+resulting scalar value of cosine similarity
+.RE
+.PP
+
+.SS "template<class T> int \fBSOM\fP< T >::dims ()\fC [inline]\fP"
+
+.PP
+get dimensions (codebook vector size) of \fBSOM\fP 
+.PP
+\fBReturns:\fP
+.RS 4
+
+.RE
+.PP
+
+.SS "template<class T> T \fBSOM\fP< T >::dotProduct (const std::vector< T > & v1, const T * v2) const\fC [inline]\fP, \fC [private]\fP"
+
+.PP
+calculates Dot Product of 2 vectors\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIv1\fP vector 1
+.br
+\fIv2\fP vector 2
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+resulting scalar value of dot product 
+.RE
+.PP
+
+.SS "template<class T> T \fBSOM\fP< T >::euclideanDistance (const std::vector< T > & v1, const std::vector< T > & v2) const\fC [inline]\fP, \fC [private]\fP"
+
+.PP
+calculates Euclidean Distance between 2 vectors\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIv1\fP vector 1
+.br
+\fIv2\fP vector 2
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+euclidean distance
+.RE
+.PP
+
+.SS "template<class T> T \fBSOM\fP< T >::euclideanDistance (const std::vector< T > & v1, const T * v2) const\fC [inline]\fP, \fC [private]\fP"
+
+.PP
+calculates Euclidean Distance between 2 vectors\&. This method overloads () as second parameter is pointer to T for performance reasons\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIv1\fP vector 1
+.br
+\fIv2\fP vector 2
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+euclidean distance
+.RE
+.PP
+
+.SS "template<class T> T \fBSOM\fP< T >::L2norm (const std::vector< T > & v1)\fC [inline]\fP, \fC [private]\fP"
+
+.PP
+calculates L2 norm of a vector 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIv1\fP input vector
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+scalar value of L2 norm\&.
+.RE
+.PP
+
+.SS "template<class T> void \fBSOM\fP< T >::load (const std::string & model_path, const \fBSOMFileFormat\fP & ff)\fC [inline]\fP"
+
+.PP
+loads the trained \fBSOM\fP network from the file\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fImodel_path\fP model path
+.RE
+.PP
+/// 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIff\fP file format
+.RE
+.PP
+
+.SS "template<class T> T* const \fBSOM\fP< T >::nodeAt (int i, int j) const\fC [inline]\fP"
+
+.PP
+get node (neuron) weights at given position\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIi\fP index of the first dimension (rows) of the \fBSOM\fP lattice\&. 
+.br
+\fIj\fP index of the second dimension (columns) of the \fBSOM\fP lattice\&.
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+returns the pointer to Type T, which is the first element in the weight (codebook) vector of the corresponding \fBSOM\fP node\&.
+.RE
+.PP
+
+.SS "template<class T> int \fBSOM\fP< T >::rows ()\fC [inline]\fP"
+
+.PP
+get #N of rows (height) of \fBSOM\fP lattice 
+.PP
+\fBReturns:\fP
+.RS 4
+
+.RE
+.PP
+
+.SS "template<class T> void \fBSOM\fP< T >::save (const std::string & model_path, const \fBSOMFileFormat\fP & ff)\fC [inline]\fP"
+
+.PP
+saves the trained \fBSOM\fP to the file\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fImodel_path\fP model file path
+.br
+\fIff\fP file format
+.RE
+.PP
+
+.SS "template<class T> void \fBSOM\fP< T >::setNodeAt (int i, int j, const std::vector< T > & val)\fC [inline]\fP"
+
+.PP
+assign values to weights of the neuron at given indices\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIi\fP index at 0th dimension (rows)
+.br
+\fIj\fP index at 1th dimension (columns)
+.br
+\fIval\fP value to set\&.
+.RE
+.PP
+
+.SS "template<class T> T \fBSOM\fP< T >::squaredEuclideanDistance (const std::vector< T > & v1, const std::vector< T > & v2) const\fC [inline]\fP, \fC [private]\fP"
+
+.PP
+calculates squared euclidean distance between 2 vectors\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIv1\fP vector 1
+.br
+\fIv2\fP vector 2
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+euclidean distance
+.RE
+.PP
+
+.SS "template<class T> void \fBSOM\fP< T >::train (const std::vector< std::vector< T >> & samples, unsigned int iterations, double s_learn_rate, double f_learn_rate, double neighborhoodSize)\fC [inline]\fP"
+
+.PP
+trains the \fBSOM\fP\&. If there are less samples than th #N of iterations, then the samples are repeated cyclically\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIsamples\fP training samples with size of N*D where N is the number of samples and D is the number of dimensions of \fBSOM\fP\&.
+.br
+\fIiterations\fP #N of iterations
+.br
+\fIs_learn_rate\fP starting learning_rate
+.br
+\fIf_learn_rate\fP ending learning_rate
+.br
+\fIneighborhoodSize\fP neighborhood size, currently only sqare neighborhood is supported\&.
+.RE
+.PP
+
+.SH "Member Data Documentation"
+.PP 
+.SS "template<class T> \fBBMDistType\fP \fBSOM\fP< T >::bmdistType\fC [private]\fP"
+
+.PP
+Best Matching Unit neighbour distance update type of the \fBSOM\fP\&. 
+.SS "template<class T> int \fBSOM\fP< T >::D\fC [private]\fP"
+
+.PP
+size of the weight vector of the each node\&. 
+.SS "template<class T> \fBDistanceType\fP \fBSOM\fP< T >::distanceType\fC [private]\fP"
+
+.PP
+distance metric that is used when BMU is calculated see () 
+.SS "template<class T> int \fBSOM\fP< T >::H\fC [private]\fP"
+
+.PP
+grid height 
+.SS "template<class T> int \fBSOM\fP< T >::W\fC [private]\fP"
+
+.PP
+grid width 
+.SS "template<class T> std::vector<T> \fBSOM\fP< T >::weights\fC [private]\fP"
+
+.PP
+weights / nodes of \fBSOM\fP 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for SOM from the source code\&.

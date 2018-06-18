@@ -1,0 +1,124 @@
+.TH "SOM.h" 3 "Mon Jun 18 2018" "Version 0.1.0" "SOM" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+SOM.h
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <iostream>\fP
+.br
+\fC#include <vector>\fP
+.br
+\fC#include <cstdlib>\fP
+.br
+\fC#include <ctime>\fP
+.br
+\fC#include <exception>\fP
+.br
+\fC#include <algorithm>\fP
+.br
+\fC#include <fstream>\fP
+.br
+\fC#include <sstream>\fP
+.br
+\fC#include <cmath>\fP
+.br
+\fC#include <yaml\-cpp/yaml\&.h>\fP
+.br
+
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "class \fBSOM< T >\fP"
+.br
+.RI "Self-Organizing Maps implementation\&. "
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBENABLE_ROCKSDB\fP   0"
+.br
+.ti -1c
+.RI "#define \fBM_PI\fP   (3\&.14159265358979323846)"
+.br
+.in -1c
+.SS "Enumerations"
+
+.in +1c
+.ti -1c
+.RI "enum \fBSOMFileFormat\fP : unsigned char { \fBSOMFileFormat::YAML\fP = 0, \fBSOMFileFormat::ROCKSDB\fP = 1 }"
+.br
+.RI "supported file formats for \fBSOM\fP "
+.ti -1c
+.RI "enum \fBBMDistType\fP : unsigned char { \fBBMDistType::Uniform\fP = 0, \fBBMDistType::ExpDecay\fP = 1, \fBBMDistType::Gaussian\fP = 2 }"
+.br
+.RI "Distribution types for BMU neighborhood update coefficients\&. "
+.ti -1c
+.RI "enum \fBDistanceType\fP : unsigned char { \fBDistanceType::Euclidean\fP = 0, \fBDistanceType::DotProduct\fP = 1, \fBDistanceType::CosineSimiarity\fP = 2, \fBDistanceType::SquaredEuclidean\fP = 3 }"
+.br
+.RI "Distance metrics "
+.in -1c
+.SH "Enumeration Type Documentation"
+.PP 
+.SS "enum \fBBMDistType\fP : unsigned char\fC [strong]\fP"
+
+.PP
+Distribution types for BMU neighborhood update coefficients\&. 
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fIUniform \fP\fP
+Same coeffs for BMU and all of its neighborhoods\&. 
+.TP
+\fB\fIExpDecay \fP\fP
+exponential decay 
+.TP
+\fB\fIGaussian \fP\fP
+Gaussian distribution 
+.SS "enum \fBDistanceType\fP : unsigned char\fC [strong]\fP"
+
+.PP
+Distance metrics 
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fIEuclidean \fP\fP
+Euclidean distance: For 2D, the distance between $ (x_1,y_1) $ and $ (x_2,y_2) $ is $ \sqrt{ (x_2 - x_1)^2 + (y_2 - y_1)^2 } $ \&. General form ( $L^2$ norm) for the vectors $A,B$ with the size $n$ is calculated as:
+.PP
+\[ \sqrt{\sum\limits_{i=1}^n (A_i - B_i)^2} \] 
+.TP
+\fB\fIDotProduct \fP\fP
+Dot Product: General form for the vectors $A,B$ with a size $n$:
+.PP
+\[ \sum\limits_{i=1}^n (A_i * B_i) \] 
+.TP
+\fB\fICosineSimiarity \fP\fP
+Cosine Simiarity: General form for the vectors $A,B$ with a size $n$ :
+.PP
+\[ \text{similarity}= \cos(\theta )={\mathbf{A} \cdot \mathbf{B} \over \|\mathbf{A} \|\|\mathbf{B} \|}= { \frac {\sum \limits _{i=1}^{n}{A_{i}B_{i} } } { \sqrt {\sum \limits _{i=1}^{n}{A_{i}^{2} } } \sqrt {\sum \limits _{i=1}^{n}{B_{i}^{2} } } } } \] 
+.TP
+\fB\fISquaredEuclidean \fP\fP
+Squared Euclidean: For 2D, the distance between $(x_1,y_1)$ and $(x_2,y_2)$ is $ (x_2 - x_1) ^ 2 + (y_2 - y_1) ^ 2 $\&. General form for the vectors $A,B$ with a size $n$ is calculated as:
+.PP
+\[ \sum\limits_{i=1}^n (A_i - B_i)^2 \] 
+.SS "enum \fBSOMFileFormat\fP : unsigned char\fC [strong]\fP"
+
+.PP
+supported file formats for \fBSOM\fP 
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fIYAML \fP\fP
+yaml file format 
+.TP
+\fB\fIROCKSDB \fP\fP
+RocksDB DB format\&. 
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for SOM from the source code\&.
