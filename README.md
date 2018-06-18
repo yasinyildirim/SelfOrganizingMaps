@@ -1,2 +1,2 @@
 # SelfOrganizingMaps
-Self organizing maps implementation.
+Standard self-organizing maps implementation.
