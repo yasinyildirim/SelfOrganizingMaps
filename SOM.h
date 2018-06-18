@@ -314,8 +314,6 @@ class SOM
 
 	/// <summary>
 	/// Empty destructor.
-	/// virtuality is important in terms of the
-	/// possible inheritance in the future.
 	/// </summary>
 	virtual ~SOM()
 	{
